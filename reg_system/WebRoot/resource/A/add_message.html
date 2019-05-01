@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--  jquery support -->
+
+		<script src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script src="http://localhost:8080/reg_system/js/jquery.timer.js" type="text/javascript" charset="utf-8"></script>
+		<!-- bootstrap support -->
+		<link rel="stylesheet" href="http://localhost:8080/reg_system/css/bootstrap.css">
+		<script src="http://localhost:8080/reg_system/js/bootstrap.min.js"></script>
+
+		<!-- toastr support -->
+		<link href="http://localhost:8080/reg_system/css/toastr.min.css" rel="stylesheet" />
+		<script src="http://localhost:8080/reg_system/js/toastr.min.js"></script>
+		<!-- 通用javascript -->
+		<script src="http://localhost:8080/reg_system/js/query.js"></script>
+
+		<!--
+    	easyUI support
+    -->
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/icon.css">
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.easyui.min.js"></script>
+
+		<style type="text/css">
+			label {
+				min-width: 100px;
+				text-align: center;
+				display: inline-block;
+				color: blue;
+			}
+			
+			textarea {
+				height: 400px;
+				padding: 20px;
+				
+				margin-top: 10px;
+				width: 600px;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container" style="margin-left: 100px;">
+			<div class="row">
+				<div  class="col-lg-8 col-lg-offset-2">
+					<label>消息内容</label>
+				</div>
+				
+			</div>
+
+			<div class="row">
+				<div class="col-lg-8">
+					<textarea id="add_message_text" placeholder="此处输入您要发布的信息">
+					</textarea>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<button class="btn-success" onclick="submit_message()" style="margin: 20px;">发布新公告</button>
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			function submit_message() {
+				var req = {};
+				req.content = $("#add_message_text").val();
+
+				Af.rest('addMessage.action', req,
+					function(data) {
+						toastr.success(data.message);
+					},
+					function(error, reason) {
+						toastr.error(reason);
+					}
+				);
+			}
+			$(document).ready(
+				function  () {
+					$("#add_message_text").val("");
+				}
+			);
+		</script>
+	</body>
+
+</html>

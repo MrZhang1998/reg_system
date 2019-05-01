@@ -1,0 +1,7 @@
+resource目录下存放的是 各种不同类型用户的界面  此目录下会进行权限检查 ， 详情见 login.filter.LoginFilter.java
+
+A ： admin 管理员相关
+
+P ： patient 患者相关
+
+D ： doctor 医生相关

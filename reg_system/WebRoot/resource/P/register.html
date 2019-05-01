@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script src="http://localhost:8080/reg_system/js/jquery.timer.js" type="text/javascript" charset="utf-8"></script>
+		<!-- bootstrap support -->
+		<link rel="stylesheet" href="http://localhost:8080/reg_system/css/bootstrap.css">
+		<script src="http://localhost:8080/reg_system/js/bootstrap.min.js"></script>
+
+		<!-- toastr support -->
+		<link href="http://localhost:8080/reg_system/css/toastr.min.css" rel="stylesheet" />
+		<script src="http://localhost:8080/reg_system/js/toastr.min.js"></script>
+		<!-- 通用javascript -->
+		<script src="http://localhost:8080/reg_system/js/query.js"></script>
+
+		<!--
+    	easyUI support
+    -->
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/icon.css">
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.easyui.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<ul class="easyui-tree" id="tt">
+
+		</ul>
+
+		<script type="text/javascript">
+			function onClickTreeNode(node) {
+				console.log(node);
+				if(node.children == null || node == undefined)
+					if(confirm("你确定要挂号吗")) {
+
+						register_patient(node.attributes, node.date);
+					} else {
+
+					}
+			}
+			// 向后台发情挂号请求
+			function register_patient(doctorid, time) {
+
+				var req = {};
+				req.doctor_id = doctorid;
+				req.time = time;
+				console.log(req.time);
+				Af.rest('registerPatient.action', req,
+					function(data) {
+						toastr.success(data.message);
+
+					},
+					function(error, reason) {
+						toastr.error(reason);
+					}
+				);
+			}
+
+			function showTree(data_my) {
+				$("#tt").tree({
+					data: data_my,
+					onClick: function(node) {
+						onClickTreeNode(node);
+					}
+				});
+			}
+			$(document).ready(
+				function() {
+					var req = {};
+					Af.rest('getTreeData.action', req,
+						function(data) {
+							console.log(data);
+							showTree(data);
+						},
+						function(error, reason) {
+							toastr.error(reason);
+						}
+					);
+
+				}
+			);
+		</script>
+	</body>
+
+</html>

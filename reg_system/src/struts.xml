@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+ 
+<struts>
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="login" class="my.common.LoginAction">
+			
+		</action>
+		
+		<action name="register" class="my.common.RegisterAction">
+			
+		</action>
+		
+		<action name="logout" class="my.common.LogoutAction">
+			
+		</action>
+		
+		<action name="getAllMessage" class="my.common.GetAllMessageAction">
+			
+		</action>
+		
+		<action name="addPersonalInfo" class="my.patient.AddPersonalInfoAction">
+			
+		</action>
+		<action name="getPatientInfo" class="my.patient.GetPatientInfoAction">
+		
+		</action>
+		
+		<action name="getTreeData" class="my.patient.GetTreeDataAction">
+		
+		</action>
+		
+		<action name="registerPatient" class="my.patient.DoRegisterAction">
+		
+		</action>
+		
+		<action name="getAllRegInfo" class="my.patient.GetAllRegInfo">
+		
+		</action>
+		
+		<action name="addMessage" class="my.admin.AddMessageInfo">
+		
+		</action>
+		
+		<action name="addDoctorInfo" class="my.admin.AddDoctorInfoAction">
+		
+		</action>
+		<action name="getAllDoctorInfo" class="my.admin.GetAllDocotorInfoAction">
+		
+		</action>
+		
+		<action name="deleteDoctorInfo" class="my.admin.DeleteDoctorInfoAction">
+		
+		</action>
+		
+		<action name="getAllPatientInfo" class="my.admin.GetAllPatientInfoAction">
+		
+		</action>
+		
+		<action name="getPatientInfoByDoctor" class="my.doctor.GetPatientInfoAction">
+		
+		</action>
+		
+	</package>
+</struts>

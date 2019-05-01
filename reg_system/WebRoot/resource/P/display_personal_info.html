@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script src="http://localhost:8080/reg_system/js/jquery.timer.js" type="text/javascript" charset="utf-8"></script>
+		<!-- bootstrap support -->
+		<link rel="stylesheet" href="http://localhost:8080/reg_system/css/bootstrap.css">
+		<script src="http://localhost:8080/reg_system/js/bootstrap.min.js"></script>
+
+		<!-- toastr support -->
+		<link href="http://localhost:8080/reg_system/css/toastr.min.css" rel="stylesheet" />
+		<script src="http://localhost:8080/reg_system/js/toastr.min.js"></script>
+		<!-- 通用javascript -->
+		<script src="http://localhost:8080/reg_system/js/query.js"></script>
+
+		<!--
+    	easyUI support
+    -->
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/icon.css">
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.easyui.min.js"></script>
+		<title></title>
+		<style type="text/css">
+			.personal_info {
+				margin: 20px;
+			}
+			
+			span {
+				display: inline-block;
+				margin: 10px;
+				text-align: left;
+				width: 150px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<table class="table table-hover table-bordered ">
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>年龄</th>
+					<th>电话</th>
+					<th>身份证</th>
+					<th>个人简介</th>
+				</tr>
+
+			</thead>
+
+			<tbody id="panel_personal_info">
+
+			</tbody>
+
+			<tfoot id='template' style='display: none;'>
+				<!-- 这个tr 作为模板使用 -->
+				<tr class="warning">
+					<td> {#name} </td>
+					<td> {#gender} </td>
+					<td> {#age} </td>
+					<td> {#phone}</td>
+					<td> {#IDcard}</td>
+					<td>{#desc}</td>
+				</tr>
+			</tfoot>
+
+		</table>
+
+		<script type="text/javascript">
+			$(document).ready(
+
+				function() {
+					var req = {};
+					Af.rest('getPatientInfo.action', req,
+						function(data) {
+							display(data);
+						},
+						function(error, reason) {
+							toastr.error(reason);
+						}
+					);
+				}
+			);
+
+			function display(data) {
+				var templ = new AfTemplate($('#template').html());
+				var target = $("#panel_personal_info");
+				var str = templ.replace(data);
+				target.append(str);
+			}
+		</script>
+	</body>
+
+</html>

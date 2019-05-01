@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script src="http://localhost:8080/reg_system/js/jquery.timer.js" type="text/javascript" charset="utf-8"></script>
+		<!-- bootstrap support -->
+		<link rel="stylesheet" href="http://localhost:8080/reg_system/css/bootstrap.css">
+		<script src="http://localhost:8080/reg_system/js/bootstrap.min.js"></script>
+
+		<!-- toastr support -->
+		<link href="http://localhost:8080/reg_system/css/toastr.min.css" rel="stylesheet" />
+		<script src="http://localhost:8080/reg_system/js/toastr.min.js"></script>
+		<!-- 通用javascript -->
+		<script src="http://localhost:8080/reg_system/js/query.js"></script>
+
+		<!--
+    	easyUI support
+    -->
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8080/reg_system/css/themes/icon.css">
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.js"></script>
+		<script type="text/javascript" src="http://localhost:8080/reg_system/js/jquery.easyui.min.js"></script>
+
+	</head>
+
+	<body>
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>医生姓名</th>
+					<th>预约时间</th>
+					<th>描述</th>
+					
+				</tr>
+			</thead>
+
+			<tbody id="container_reg_info">
+			</tbody>
+
+			<tfoot class='template' style="display: none;">
+				<!-- 这个tr 作为模板使用 -->
+				<tr >
+					<td> {#doctor_name} </td>
+					<td> {#time} </td>
+					<td> {#desc} </td>
+
+					
+				</tr>
+			</tfoot>
+
+		</table>
+
+		<script type="text/javascript">
+			function showResult(data) {
+				var templ = new AfTemplate($('.template').html());
+				var target = $("#container_reg_info");
+				target.html(""); // 清空
+				for(var row of data) {
+					var str = templ.replace(row); // 使用模板替换
+					target.append(str);
+				}
+				// 如果没有数据，则把下面的提示显示出来
+				if(data.length == 0)
+					target.append("没有数据");
+			}
+
+			function init() {
+				var req = {};
+				Af.rest('getAllRegInfo.action', req,
+					function(data) {
+						showResult(data);
+					},
+					function(error, reason) {
+						toastr.error(reason);
+					}
+				);
+			}
+
+			$(document).ready(
+
+				function() {
+					init();
+				}
+			);
+
+			
+		</script>
+	</body>
+
+</html>
